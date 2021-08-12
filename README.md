@@ -2,6 +2,8 @@
 
 [Deno](https://deno.land/) port of [Androz2091/diswho](https://github.com/Androz2091/diswho) featuring reCaptcha protection, JWT authentication and return URL.
 
+> Forked version that works with vercel.com
+
 ## Usage
 
 Login at `/`. If provided, `returnUrl` query param will be redirected to, with a `diswhoJwt` query param.
