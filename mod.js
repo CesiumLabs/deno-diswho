@@ -1,5 +1,5 @@
-import pogo from 'https://deno.land/x/pogo/main.ts';
 import { signJwt, verifyJwt } from './lib/jwt.js';
+import pogo from 'https://deno.land/x/pogo/main.ts';
 
 const PORT = Deno.env.get('PORT');
 const CAPTCHA_PUBLIC_KEY = Deno.env.get('CAPTCHA_PUBLIC_KEY');
@@ -8,11 +8,15 @@ const DISCORD_SECRET = Deno.env.get('DISCORD_SECRET');
 const SESSION_DURATION = Deno.env.get('SESSION_DURATION') || 900000;
 const JWT_SECRET = Deno.env.get('JWT_SECRET') || [...crypto.getRandomValues(new Uint8Array(20))].map(item => item.toString(16)).join('');
 const server = pogo.server({
-    port: parseInt(PORT) || 3000
+    port: parseInt(PORT) || 8080
 });
 
-addEventListener("fetch", (request) => {
-    server.inject(request);
+addEventListener("fetch", async (event) => {
+    const response = await server.inject(event.request);
+    event.respondWith(new Response(response.body, {
+        headers: response.headers,
+        status: response.status
+    }));
 });
 
 server.router.get('/', (request, h) => h.file('www/index.html'));
