@@ -1,4 +1,6 @@
-export default function (req) {
+import { ServerRequest } from "../../deps.ts";
+
+export default function (req: ServerRequest) {
     const headers = new Headers();
     headers.append("Content-Type", "application/json");
     

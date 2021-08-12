@@ -1,7 +1,7 @@
-import { create, verify } from '../../deps.js';
+import { create, verify, Payload } from '../../deps.ts';
 
 const
-    signJwt = async (data, secret) => await create(
+    signJwt = async (data: Payload, secret: string) => await create(
         {
             alg: 'HS256',
             typ: 'JWT'
@@ -9,7 +9,7 @@ const
         data,
         secret
     ),
-    verifyJwt = async (jwt, secret) => await verify(
+    verifyJwt = async (jwt: string, secret: string) => await verify(
         jwt,
         secret,
         'HS256'

@@ -1,7 +1,7 @@
-import { signJwt } from '../[lib]/jwt.js';
-import { CAPTCHA_PRIVATE_KEY, SESSION_DURATION, JWT_SECRET } from "../../deps.js";
+import { signJwt } from '../[lib]/jwt.ts';
+import { CAPTCHA_PRIVATE_KEY, SESSION_DURATION, JWT_SECRET, ServerRequest } from "../../deps.ts";
 
-export default async function (req) {
+export default async function (req: ServerRequest) {
     const headers = new Headers();
     headers.append("Content-Type", "application/json");
     const {
