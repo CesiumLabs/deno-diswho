@@ -1,16 +1,19 @@
-import pogo from 'https://deno.land/x/pogo@v0.5.2/main.ts';
+import pogo from 'https://deno.land/x/pogo/main.ts';
 import { signJwt, verifyJwt } from './lib/jwt.js';
 
-const
-    PORT = Deno.env.get('PORT'),
-    CAPTCHA_PUBLIC_KEY = Deno.env.get('CAPTCHA_PUBLIC_KEY'),
-    CAPTCHA_PRIVATE_KEY = Deno.env.get('CAPTCHA_PRIVATE_KEY'),
-    DISCORD_SECRET = Deno.env.get('DISCORD_SECRET'),
-    SESSION_DURATION = Deno.env.get('SESSION_DURATION') || 900000,
-    JWT_SECRET = Deno.env.get('JWT_SECRET') || [...crypto.getRandomValues(new Uint8Array(20))].map(item => item.toString(16)).join(''),
-    server = pogo.server({
-        port: parseInt(PORT)
-    });
+const PORT = Deno.env.get('PORT');
+const CAPTCHA_PUBLIC_KEY = Deno.env.get('CAPTCHA_PUBLIC_KEY');
+const CAPTCHA_PRIVATE_KEY = Deno.env.get('CAPTCHA_PRIVATE_KEY');
+const DISCORD_SECRET = Deno.env.get('DISCORD_SECRET');
+const SESSION_DURATION = Deno.env.get('SESSION_DURATION') || 900000;
+const JWT_SECRET = Deno.env.get('JWT_SECRET') || [...crypto.getRandomValues(new Uint8Array(20))].map(item => item.toString(16)).join('');
+const server = pogo.server({
+    port: parseInt(PORT) || 3000
+});
+
+addEventListener("fetch", (request) => {
+    server.inject(request);
+});
 
 server.router.get('/', (request, h) => h.file('www/index.html'));
 
@@ -72,5 +75,3 @@ server.router.get('/user/{userId}', async (request, h) => {
     }
     return response;
 });
-
-server.start();
