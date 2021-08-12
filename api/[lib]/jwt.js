@@ -1,4 +1,4 @@
-import { create, verify } from 'https://deno.land/x/djwt@v2.2/mod.ts';
+import { create, verify } from '../../deps.js';
 
 const
     signJwt = async (data, secret) => await create(

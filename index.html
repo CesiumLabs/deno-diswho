@@ -34,7 +34,7 @@
 					button = document.createElement('button'),
 					script = document.createElement('script'),
 					returnUrl = new URLSearchParams(window.location.search).get('returnUrl'),
-					{ publicKey } = await (await fetch('/captcha/credentials')).json();
+					{ publicKey } = await (await fetch('/api/captcha/credentials')).json();
 				button.classList.add('g-recaptcha');
 				button.setAttribute('data-sitekey', publicKey);
 				button.setAttribute('data-action', 'submit');
@@ -48,7 +48,7 @@
 						const {
 							success,
 							jwt
-						} = await (await fetch(`/captcha/validate?token=${token}`)).json();
+						} = await (await fetch(`/api/captcha/validate?token=${token}`)).json();
 						if(success){
 							status.textContent = 'Captcha validated';
 							if(returnUrl)
